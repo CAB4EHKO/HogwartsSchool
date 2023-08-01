@@ -47,16 +47,16 @@ public class FacultyController {
     }
 
     @PostMapping
-    public Faculty creatFaculty(Faculty faculty) {
+    public Faculty creatFaculty(@RequestBody Faculty faculty) {
 
         return facultyService.creatFaculty(faculty);
 
     }
 
-    @PutMapping
-    public ResponseEntity<Faculty> editFaculty(Faculty faculty) {
+    @PutMapping("{id}")
+    public ResponseEntity<Faculty> editFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {
 
-        Faculty foundFaculty = facultyService.editFaculty(faculty);
+        Faculty foundFaculty = facultyService.editFaculty(id, faculty);
         if (foundFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -65,13 +65,9 @@ public class FacultyController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
+    public ResponseEntity deleteFaculty(@PathVariable Long id) {
 
-        Faculty removeFaculty = facultyService.deleteFaculty(id);
-        if (removeFaculty == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(removeFaculty);
-
+        facultyService.deleteFaculty(id);
+        return ResponseEntity.ok().build();
     }
 }

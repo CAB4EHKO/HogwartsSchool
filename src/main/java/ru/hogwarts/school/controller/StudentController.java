@@ -47,16 +47,16 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student creatStudent(Student student) {
+    public Student creatStudent(@RequestBody Student student) {
 
         return studentService.creatStudent(student);
 
     }
 
-    @PutMapping
-    public ResponseEntity<Student> editStudent(Student student) {
+    @PutMapping("{id}")
+    public ResponseEntity<Student> editStudent(@PathVariable Long id, @RequestBody Student student) {
 
-        Student foundStudent = studentService.editStudent(student);
+        Student foundStudent = studentService.editStudent(id, student);
         if (foundStudent == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -65,13 +65,10 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity deleteStudent(@PathVariable Long id) {
 
-        Student removeStudent = studentService.deleteStudent(id);
-        if (removeStudent == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(removeStudent);
+       studentService.deleteStudent(id);
+        return ResponseEntity.ok().build();
 
     }
 }
