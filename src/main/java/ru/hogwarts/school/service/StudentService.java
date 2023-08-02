@@ -49,12 +49,9 @@ public class StudentService {
 
     }
 
-    public List<Student> searchByAge(int age) {
+    public List<Student> findByAge(int age) {
 
-        return studentRepository.findAll()
-                .stream()
-                .filter(student -> student.getAge() == age)
-                .collect(Collectors.toList());
+        return studentRepository.findByAge(age);
 
     }
 }

@@ -33,9 +33,9 @@ public class FacultyController {
     }
 
     @GetMapping("/search/{color}")
-    public List<Faculty> searchByColor(@PathVariable String color) {
+    public List<Faculty> findByColor(@PathVariable String color) {
 
-        return facultyService.searchByColor(color);
+        return facultyService.findByColor(color);
 
     }
 

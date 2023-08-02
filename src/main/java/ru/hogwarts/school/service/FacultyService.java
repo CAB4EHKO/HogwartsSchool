@@ -49,12 +49,7 @@ public class FacultyService {
 
     }
 
-    public List<Faculty> searchByColor(String color) {
-
-        return facultyRepository.findAll()
-                .stream()
-                .filter(student -> student.getColor().equals(color))
-                .collect(Collectors.toList());
-
+    public List<Faculty> findByColor(String color) {
+        return facultyRepository.findByColor(color);
     }
 }

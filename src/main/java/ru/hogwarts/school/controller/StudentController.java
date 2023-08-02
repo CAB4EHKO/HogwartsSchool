@@ -33,9 +33,9 @@ public class StudentController {
     }
 
     @GetMapping("/search/{age}")
-    public List<Student> searchByAge(@PathVariable Integer age) {
+    public List<Student> findByAge(@PathVariable Integer age) {
 
-        return studentService.searchByAge(age);
+        return studentService.findByAge(age);
 
     }
 
