@@ -32,18 +32,13 @@ public class FacultyController {
 
     }
 
-    @GetMapping("/search/{color}")
-    public List<Faculty> findByColor(@PathVariable String color) {
-
-        return facultyService.findByColor(color);
-
-    }
-
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> getAllFaculty() {
-
+    public ResponseEntity findFaculties(@RequestParam(required = false) String name,
+                                      @RequestParam(required = false) String color) {
+        if ((name != null && !name.isBlank()) || (color != null && !color.isBlank())) {
+            return ResponseEntity.ok(facultyService.findFaculties(name, color));
+        }
         return ResponseEntity.ok(facultyService.getAllFaculty());
-
     }
 
     @PostMapping

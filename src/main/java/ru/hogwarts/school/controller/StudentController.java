@@ -32,18 +32,25 @@ public class StudentController {
 
     }
 
-    @GetMapping("/search/{age}")
-    public List<Student> findByAge(@PathVariable Integer age) {
-
-        return studentService.findByAge(age);
-
-    }
-
     @GetMapping
-    public ResponseEntity<Collection<Student>> getAllStudents() {
-
+    public ResponseEntity findStudent(@RequestParam(required = false) Integer age,
+                                      @RequestParam(required = false) Integer minAge,
+                                      @RequestParam(required = false) Integer maxAge) {
+        if (age != null) {
+            if (age >= 0) {
+                return ResponseEntity.ok(studentService.findByAge(age));
+            } else {
+                return ResponseEntity.badRequest().body("Invalid age value");
+            }
+        }
+        if (minAge != null && maxAge != null) {
+            if (minAge >= 0 && maxAge >= 0) {
+                return ResponseEntity.ok(studentService.findByAgeBetween(minAge, maxAge));
+            } else {
+                return ResponseEntity.badRequest().body("Invalid age range values");
+            }
+        }
         return ResponseEntity.ok(studentService.getAllStudent());
-
     }
 
     @PostMapping
@@ -67,7 +74,7 @@ public class StudentController {
     @DeleteMapping("{id}")
     public ResponseEntity deleteStudent(@PathVariable Long id) {
 
-       studentService.deleteStudent(id);
+        studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
 
     }
