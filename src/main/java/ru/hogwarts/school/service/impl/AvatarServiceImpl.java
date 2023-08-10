@@ -11,6 +11,7 @@ import ru.hogwarts.school.service.StudentService;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
@@ -54,9 +55,12 @@ public class AvatarServiceImpl implements AvatarService {
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(file.getSize());
         avatar.setMediaType(file.getContentType());
-        avatar.setData();
+        avatar.setData(generatePreviewData(filePath));
+
+        avatarRepository.save(avatar);
     }
 
+    @Override
     public Avatar findAvatar(Long studentId) {
         return avatarRepository.findByStudentId(studentId).orElseThrow();
     }
@@ -68,6 +72,13 @@ public class AvatarServiceImpl implements AvatarService {
             BufferedImage image = ImageIO.read(bis);
 
             int height = image.getHeight() / (image.getWidth() / 100);
+            BufferedImage data = new BufferedImage(100, height, image.getType());
+            Graphics2D graphics = data.createGraphics();
+            graphics.drawImage(image, 0, 0, 100, height, null);
+            graphics.dispose();
+
+            ImageIO.write(data, getExtension(filePath.getFileName().toString()), baos);
+            return baos.toByteArray();
         }
     }
 
