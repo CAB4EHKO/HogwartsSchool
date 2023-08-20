@@ -16,6 +16,7 @@ public class Student {
     private String name;
     private int age;
 
+
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "faculty_id")
@@ -68,4 +69,5 @@ public class Student {
     public int hashCode() {
         return Objects.hash(id, name, age);
     }
+
 }
