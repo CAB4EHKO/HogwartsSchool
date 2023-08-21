@@ -32,8 +32,18 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty editFaculty(long id, Faculty faculty) {
-        return facultyRepository.save(faculty);
+        Optional<Faculty> optionalFaculty = facultyRepository.findById(id);
+        if (optionalFaculty.isPresent()) {
+            Faculty existingFaculty = optionalFaculty.get();
+            existingFaculty.setName(faculty.getName());
+            existingFaculty.setColor(faculty.getColor());
+            return facultyRepository.save(existingFaculty);
+        }
+        return null;
     }
+//    public Faculty editFaculty(long id, Faculty faculty) {
+//        return facultyRepository.save(faculty);
+//    }
 
     @Override
     public void deleteFaculty(long id) {
@@ -60,3 +70,4 @@ public class FacultyServiceImpl implements FacultyService {
         }
     }
 }
+
