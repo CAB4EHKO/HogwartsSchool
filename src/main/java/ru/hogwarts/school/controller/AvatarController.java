@@ -48,7 +48,7 @@ public class AvatarController {
     }
 
     @GetMapping(value = "{id}/avatar")
-public void downloadCover(@PathVariable Long id, HttpServletResponse response) throws IOException {
+    public void downloadCover(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Avatar avatar = avatarService.findAvatar(id);
 
         Path path = Path.of(avatar.getFilePath());
