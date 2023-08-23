@@ -8,6 +8,7 @@ import ru.hogwarts.school.service.StudentService;
 
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -64,5 +65,20 @@ public class StudentServiceImpl implements StudentService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public int countAllStudentInTheSchool() {
+        return studentRepository.countAllStudentInTheSchool();
+    }
+
+    @Override
+    public double getAverageAgeOfStudent() {
+        return studentRepository.getAverageAgeOfStudent();
+    }
+
+    @Override
+    public List<Student> getLasStudent() {
+        return studentRepository.getLastStudent();
     }
 }
