@@ -13,3 +13,12 @@ CREATE TABLE Cars (
                       model VARCHAR(255) NOT NULL,     -- Модель машины
                       price DECIMAL(10, 2) NOT NULL    -- Стоимость машины (десятичное число с двумя знаками после запятой)
 );
+
+-- Создаем таблицу "Ownership" для отслеживания владения машинами
+CREATE TABLE Ownership (
+                           ownership_id SERIAL PRIMARY KEY,  -- Уникальный идентификатор записи о владении
+                           person_id INT NOT NULL,           -- Идентификатор человека
+                           car_id INT NOT NULL,              -- Идентификатор машины
+                           FOREIGN KEY (person_id) REFERENCES People (person_id),  -- Внешний ключ к таблице People
+                           FOREIGN KEY (car_id) REFERENCES Cars (car_id)          -- Внешний ключ к таблице Cars
+);

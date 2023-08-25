@@ -1,9 +1,7 @@
 package ru.hogwarts.school.service.impl;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
@@ -74,7 +72,10 @@ public class AvatarServiceImpl implements AvatarService {
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
-
+//@Override
+//public Page<Avatar> getAllAvatars(Pageable pageable) {
+//    return avatarRepository.findAll(pageable);
+//}
 
     private byte[] generatePreviewData(Path filePath) throws IOException {
         try (InputStream is = Files.newInputStream(filePath);
