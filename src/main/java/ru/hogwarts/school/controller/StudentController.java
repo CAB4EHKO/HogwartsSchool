@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.impl.StudentServiceImpl;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -62,6 +63,21 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(foundFaculty);
+    }
+
+    @GetMapping("allStudentCount")
+    public int getSchoolStudentsCount() {
+        return studentService.countAllStudentInTheSchool();
+    }
+
+    @GetMapping("averageAgeOfStudent")
+    public double getAverageAgeOfStudent() {
+        return studentService.getAverageAgeOfStudent();
+    }
+
+    @GetMapping("lastStudent")
+    public List<Student> lastStudent() {
+        return studentService.getLasStudent();
     }
 
     @PostMapping
