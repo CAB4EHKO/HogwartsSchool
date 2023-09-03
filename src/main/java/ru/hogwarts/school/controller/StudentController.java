@@ -77,7 +77,7 @@ public class StudentController {
 
     @GetMapping("lastStudent")
     public List<Student> lastStudent() {
-        return studentService.getLasStudent();
+        return studentService.getLastStudent();
     }
 
     @PostMapping

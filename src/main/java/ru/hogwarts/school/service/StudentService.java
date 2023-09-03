@@ -30,5 +30,5 @@ public interface StudentService {
 
     double getAverageAgeOfStudent();
 
-    List<Student> getLasStudent();
+    List<Student> getLastStudent();
 }
