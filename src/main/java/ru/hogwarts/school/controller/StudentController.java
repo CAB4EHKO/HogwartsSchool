@@ -80,9 +80,20 @@ public class StudentController {
         return studentService.getLastStudent();
     }
 
+    @GetMapping("nameStartsWithLetter")
+    public ResponseEntity<List<String>> filterStudentsByNameStartsWith(@RequestParam(value = "letter") String letter) {
+        List<String> filteredStudents = studentService.filterStudentsByNameStartsWith(letter);
+        return ResponseEntity.ok(filteredStudents);
+    }
+
+    @GetMapping("averageAgeOfStudentsStreamAPI")
+    public ResponseEntity<Double> getAverageAgeOfStudentsByStreamAPI() {
+        double averageAge = studentService.getAverageAgeOfStudentsByStreamAPI();
+        return ResponseEntity.ok(averageAge);
+    }
+
     @PostMapping
     public Student creatStudent(@RequestBody Student student) {
-
         return studentService.creatStudent(student);
 
     }
