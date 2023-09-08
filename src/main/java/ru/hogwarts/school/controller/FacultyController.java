@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.impl.FacultyServiceImpl;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -54,10 +55,21 @@ public class FacultyController {
         return ResponseEntity.ok(foundStudents);
     }
 
+//    @GetMapping("longestFaculty")
+//    public ResponseEntity<String> getLongestFacultyName() {
+//        String nameFaculty = facultyService.getLongestFacultyName();
+//        return ResponseEntity.ok(nameFaculty);
+//    }
+
+    @GetMapping("longestFacultyName")
+    public ResponseEntity<List<String>> getLongestFacultyName() {
+        List<String> nameFaculty = facultyService.getLongestFacultyName();
+        return ResponseEntity.ok(nameFaculty);
+    }
+
 
     @PostMapping
     public Faculty creatFaculty(@RequestBody Faculty faculty) {
-
         return facultyService.creatFaculty(faculty);
 
     }

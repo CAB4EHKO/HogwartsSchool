@@ -9,9 +9,8 @@ import ru.hogwarts.school.repositories.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -84,6 +83,36 @@ public class FacultyServiceImpl implements FacultyService {
         } else {
             return Collections.emptyList();
         }
+    }
+
+//    @Override
+//    public String getLongestFacultyName() {
+//        return facultyRepository.findAll()
+//                .stream()
+//                .map(Faculty::getName)
+//                .max(Comparator.comparing(String::length))
+//                .orElse("");
+//    }
+
+    @Override
+    public List<String> getLongestFacultyName() {
+        logger.info("Requested method: getLongestFacultyName");
+        List<Faculty> faculties = facultyRepository.findAll();
+
+        if (faculties.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        int maxLength = faculties.stream()
+                .map(Faculty::getName)
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+
+        return faculties.stream()
+                .filter(faculty -> faculty.getName().length() == maxLength)
+                .map(Faculty::getName)
+                .collect(Collectors.toList());
     }
 }
 
