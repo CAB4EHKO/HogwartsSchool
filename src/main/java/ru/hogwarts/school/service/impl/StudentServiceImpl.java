@@ -119,4 +119,79 @@ public class StudentServiceImpl implements StudentService {
                 .average()
                 .orElse(0.0);
     }
+
+    @Override
+    public void parallelThreads() {
+        List<String> studentNames = studentRepository
+                .findAll()
+                .stream()
+                .map(Student::getName)
+                .limit(6)
+                .collect(Collectors.toList());
+
+        logger.info(studentNames.toString());
+
+        printStudentName(studentNames.get(0));
+        printStudentName(studentNames.get(1));
+
+        new Thread(() -> {
+            printStudentName(studentNames.get(2));
+            printStudentName(studentNames.get(3));
+
+        }).start();
+        new Thread(() -> {
+            printStudentName(studentNames.get(4));
+            printStudentName(studentNames.get(5));
+
+        }).start();
+
+    }
+
+    @Override
+    public void synchronizedTreads() {
+        List<String> studentNames = studentRepository
+                .findAll()
+                .stream()
+                .map(Student::getName)
+                .limit(6)
+                .collect(Collectors.toList());
+
+        logger.info(studentNames.toString());
+
+        printStudentNamesSync(studentNames.get(0));
+        printStudentNamesSync(studentNames.get(1));
+
+        Thread thread1 = new Thread(() -> {
+            printStudentNamesSync(studentNames.get(2));
+            printStudentNamesSync(studentNames.get(3));
+        });
+
+        Thread thread2 = new Thread(() -> {
+            printStudentNamesSync(studentNames.get(4));
+            printStudentNamesSync(studentNames.get(5));
+        });
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void printStudentName(String name) {
+        try {
+            Thread.sleep(3000);
+            logger.info(name);
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    private synchronized void printStudentNamesSync(String name) {
+        printStudentName(name);
+    }
 }
