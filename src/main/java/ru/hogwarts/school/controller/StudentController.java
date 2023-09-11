@@ -92,6 +92,16 @@ public class StudentController {
         return ResponseEntity.ok(averageAge);
     }
 
+    @GetMapping("threads")
+    public void parallelTreads() {
+        studentService.parallelThreads();
+    }
+
+    @GetMapping("threadsSynchronized")
+    public void synchronizedTreads() {
+        studentService.synchronizedTreads();
+    }
+
     @PostMapping
     public Student creatStudent(@RequestBody Student student) {
         return studentService.creatStudent(student);
